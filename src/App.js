@@ -1,24 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import Coffee from './Coffee.js';
+import CoffeeForm from './CoffeeForm.js';
+import NewCoffee from './NewCoffee.js';
+import { Grid } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+
 
 function App() {
+
+  const [coffees, setCoffees] = useState([])
+
+  const loadCoffees = () => {
+    fetch('http://localhost:5000/coffeeJourney', {
+      method: 'GET',
+    }).then(coffees => coffees.json()).then(coffees => setCoffees(coffees))
+  }
+  
+  const coffeeItems = coffees.map((coffee) => 
+    <Grid item><Coffee name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price}></Coffee></Grid>
+  )
+
+  useEffect(() => {loadCoffees()}, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid container spacing={2}>
+      {coffeeItems}
+    </Grid>
   );
 }
 
