@@ -148,7 +148,7 @@ function CoffeeForm(props) {
     setTags("");
     setPrice("");
     setImage({url: "scenery.jpg"});
-    if (props.orReset != undefined) {
+    if (props.onReset != undefined) {
       props.onReset()
     }
   }

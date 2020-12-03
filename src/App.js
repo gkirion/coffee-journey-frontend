@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import Coffee from './Coffee.js';
-import CoffeeForm from './CoffeeForm.js';
 import NewCoffee from './NewCoffee.js';
 import { Grid } from '@material-ui/core';
 import { useState, useEffect } from 'react';
@@ -26,6 +25,7 @@ function App() {
   return (
     <Grid container spacing={2}>
       {coffeeItems}
+      <Grid item><NewCoffee></NewCoffee></Grid>
     </Grid>
   );
 }
