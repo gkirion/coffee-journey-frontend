@@ -138,8 +138,8 @@ function CoffeeForm(props) {
   }
 
   const test = () => {
-    //props.onSubmit();
     handleSubmit()
+    resetForm()
   }
 
   const resetForm = () => {
