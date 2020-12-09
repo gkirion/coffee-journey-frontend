@@ -65,7 +65,7 @@ function Coffee(props) {
 
   return ( 
     <Grid container spacing={2} className={classes.root}>
-      <Grid item><img src="scenery.jpg" class="Coffee-image"></img></Grid>
+      <Grid item><img src={props.imageUrl} class="Coffee-image"></img></Grid>
       <Grid item xs sm container direction="column" spacing={2} className={classes.info}>
         <Grid item xs>
           <Typography gutterBottom variant="subtitle1">{props.name}</Typography>

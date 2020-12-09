@@ -42,7 +42,7 @@ function App() {
   }
   
   const coffeeItems = coffees.map((coffee) => 
-    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimeout(() => {setFailedDeleteOpen(false)}, 3000);}}></Coffee></Grid>
+    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimeout(() => {setFailedDeleteOpen(false)}, 3000);}}></Coffee></Grid>
   )
 
   useEffect(() => {loadCoffees()}, []);
