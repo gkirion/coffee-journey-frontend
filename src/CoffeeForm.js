@@ -114,12 +114,7 @@ function CoffeeForm(props) {
     console.log(`image url: ${URL.createObjectURL(event.target.files[0])}`);
   }
 
-  const handleSubmit = async () => {
-    console.log(name);
-    console.log(company);
-    console.log(tags);
-    console.log(price);
-    console.log(image);
+  const submitCoffee = async () => {
     try {
       const formData = new FormData();
       formData.append('image', image.file);
@@ -131,14 +126,21 @@ function CoffeeForm(props) {
       await fetch('http://localhost:5000/coffeeJourney', {
         method: 'POST',
         body: formData
-      }).then((response) => {console.log(response)});
+      }).then((response) => {
+        if (response.status == 200) {
+          props.onSuccessfulSubmit();
+        } else {
+          props.onFailedSubmit();
+        }
+      });
     } catch (e) {
       console.log(e);
+      props.onFailedSubmit();
     }
   }
 
-  const test = () => {
-    handleSubmit()
+  const handleSubmit = () => {
+    submitCoffee()
     resetForm()
   }
 
@@ -202,7 +204,7 @@ function CoffeeForm(props) {
               <Grid item xs><TextField label="Price" type="number" InputProps={{inputProps : {min: 0, step: 0.1}}} name="price" value={price} onChange={handlePrice}></TextField></Grid>
             </Grid>
           </Grid>
-          <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={test}>Add Coffee</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
+          <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={handleSubmit}>Add Coffee</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
         </Grid>
       </Grid>
     </form>

@@ -28,7 +28,7 @@ function NewCoffee(props) {
   const [isEdit, setIsEdit] = useState(false);
 
   if (isEdit) {
-    return <CoffeeForm onReset={() => {setIsEdit(false)}}></CoffeeForm>
+    return <CoffeeForm onSuccessfulSubmit={props.onSuccessfulCreate} onFailedSubmit={props.onFailedCreate} onReset={() => {setIsEdit(false)}}></CoffeeForm>
   } else {
     return (
       <Grid container spacing={2} className={classes.root}>

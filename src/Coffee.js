@@ -6,10 +6,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
+import Modal from '@material-ui/core/Modal';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import './Coffee.css';
+import CoffeeForm from './CoffeeForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +50,7 @@ function Coffee(props) {
   const classes = useStyles();
   const [showControls, setShowControls] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const handleDelete = (coffeeId) => {
     fetch('http://localhost:5000/coffeeJourney/' + coffeeId, {
@@ -104,6 +107,18 @@ function Coffee(props) {
               </DialogActions>
             </div>
           </Dialog>
+          <Modal
+            className={classes.modal}
+            open={showUpdateModal}
+            onClose={() => {setShowUpdateModal(false)}}
+            aria-labelledby="update-modal-title"
+            aria-describedby="update-modal-content"
+          >
+            <div className={classes.paper}>
+              <h2 id="update-modal-title">Update coffee</h2>
+              <CoffeeForm onReset={() => {setShowUpdateModal(false)}}></CoffeeForm>
+            </div>
+          </Modal>
       </Grid>
     </Grid>
   );

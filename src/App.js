@@ -34,6 +34,8 @@ function App() {
   const [coffees, setCoffees] = useState([])
   const [successfulDeleteOpen, setSuccessfulDeleteOpen] = useState(false)
   const [failedDeleteOpen, setFailedDeleteOpen] = useState(false)
+  const [successfulCreateOpen, setSuccessfulCreateOpen] = useState(false)
+  const [failedCreateOpen, setFailedCreateOpen] = useState(false)
 
   const loadCoffees = () => {
     fetch('http://localhost:5000/coffeeJourney', {
@@ -50,7 +52,8 @@ function App() {
   return (
     <Grid container spacing={2}>
       {coffeeItems}
-      <Grid item><NewCoffee></NewCoffee></Grid>
+      <Grid item><NewCoffee onSuccessfulCreate={() => {setSuccessfulCreateOpen(true); setTimeout(() => {setSuccessfulCreateOpen(false)}, 3000); loadCoffees()}} onFailedCreate={() => {setFailedCreateOpen(true); setTimeout(() => {setFailedCreateOpen(false)}, 3000);}}></NewCoffee></Grid>
+
       <Dialog
         className={classes.modal}
         open={successfulDeleteOpen}
@@ -82,6 +85,40 @@ function App() {
         </DialogTitle>
         <DialogActions>
           <Button onClick={() => {setFailedDeleteOpen(false)}}>ok</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        className={classes.modal}
+        open={successfulCreateOpen}
+        onClose={() => setSuccessfulCreateOpen(false)}
+        aria-labelledby="successful-create-modal-title"        
+      >
+        <DialogTitle id="successful-create-modal-title" className={classes.modalTitle}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            Coffee successfully added!
+          </Alert>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => {setSuccessfulCreateOpen(false)}}>ok</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        className={classes.modal}
+        open={failedCreateOpen}
+        onClose={() => setFailedCreateOpen(false)}
+        aria-labelledby="failed-create-modal-title"        
+      >
+        <DialogTitle id="failed-create-modal-title" className={classes.modalTitle}>
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Could not add coffee
+          </Alert>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => {setFailedCreateOpen(false)}}>ok</Button>
         </DialogActions>
       </Dialog>
 
