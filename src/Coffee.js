@@ -23,8 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     minWidth: 200
-  }, controls: {
+  }, 
+  price: {
     minWidth: 80
+  },
+  controls: {
+    minHeight: '82%'    
   },
   modal: {
     display: 'flex',
@@ -76,10 +80,10 @@ function Coffee(props) {
         </Grid>
         <Grid item xs><Typography gutterBottom variant="body1">{props.tags}</Typography></Grid>
       </Grid>
-      <Grid item xs={1} sm={1} container direction="column" spacing={2} className={classes.controls} onMouseEnter={() => {setShowControls(true)}} onMouseLeave={() => {setShowControls(false)}}>
+      <Grid item xs={1} sm={1} container direction="column" spacing={2} className={classes.price} onMouseEnter={() => {setShowControls(true)}} onMouseLeave={() => {setShowControls(false)}}>
         <Grid item xs={1} sm={1}>{props.price}€</Grid>
           {showControls && (
-            <Grid item xs={1} sm={1} container direction="column">
+            <Grid item xs={1} sm={1} container direction="column" className={classes.controls} justify="flex-end">
               <Grid item xs={1} sm={1}>
                 <IconButton>
                   <Edit></Edit>
