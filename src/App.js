@@ -36,6 +36,7 @@ function App() {
   const [failedDeleteOpen, setFailedDeleteOpen] = useState(false)
   const [successfulCreateOpen, setSuccessfulCreateOpen] = useState(false)
   const [failedCreateOpen, setFailedCreateOpen] = useState(false)
+  const [timer, setTimer] = useState({})
 
   const loadCoffees = () => {
     fetch('http://localhost:5000/coffeeJourney', {
@@ -44,7 +45,7 @@ function App() {
   }
   
   const coffeeItems = coffees.map((coffee) => 
-    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimeout(() => {setFailedDeleteOpen(false)}, 3000);}}></Coffee></Grid>
+    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimer(setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000)); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimer(setTimeout(() => {setFailedDeleteOpen(false)}, 3000));}}></Coffee></Grid>
   )
 
   useEffect(() => {loadCoffees()}, []);
@@ -52,7 +53,7 @@ function App() {
   return (
     <Grid container spacing={2}>
       {coffeeItems}
-      <Grid item><NewCoffee onSuccessfulCreate={() => {setSuccessfulCreateOpen(true); setTimeout(() => {setSuccessfulCreateOpen(false)}, 3000); loadCoffees()}} onFailedCreate={() => {setFailedCreateOpen(true); setTimeout(() => {setFailedCreateOpen(false)}, 3000);}}></NewCoffee></Grid>
+      <Grid item><NewCoffee onSuccessfulCreate={() => {setSuccessfulCreateOpen(true); setTimer(setTimeout(() => {setSuccessfulCreateOpen(false)}, 3000)); loadCoffees()}} onFailedCreate={() => {setFailedCreateOpen(true); setTimer(setTimeout(() => {setFailedCreateOpen(false)}, 3000));}}></NewCoffee></Grid>
 
       <Dialog
         className={classes.modal}
@@ -67,7 +68,7 @@ function App() {
           </Alert>
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => {setSuccessfulDeleteOpen(false)}}>ok</Button>
+          <Button onClick={() => {setSuccessfulDeleteOpen(false); clearTimeout(timer)}}>ok</Button>
         </DialogActions>
       </Dialog>
 
@@ -84,7 +85,7 @@ function App() {
           </Alert>
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => {setFailedDeleteOpen(false)}}>ok</Button>
+          <Button onClick={() => {setFailedDeleteOpen(false); clearTimeout(timer)}}>ok</Button>
         </DialogActions>
       </Dialog>
 
@@ -101,7 +102,7 @@ function App() {
           </Alert>
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => {setSuccessfulCreateOpen(false)}}>ok</Button>
+          <Button onClick={() => {setSuccessfulCreateOpen(false); clearTimeout(timer)}}>ok</Button>
         </DialogActions>
       </Dialog>
 
@@ -118,7 +119,7 @@ function App() {
           </Alert>
         </DialogTitle>
         <DialogActions>
-          <Button onClick={() => {setFailedCreateOpen(false)}}>ok</Button>
+          <Button onClick={() => {setFailedCreateOpen(false); clearTimeout(timer)}}>ok</Button>
         </DialogActions>
       </Dialog>
 
