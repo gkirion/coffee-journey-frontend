@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Rating from '@material-ui/lab/Rating';
 import Edit from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
@@ -78,7 +79,10 @@ function Coffee(props) {
           <Typography gutterBottom variant="subtitle1">{props.name}</Typography>
           <Typography gutterBottom variant="subtitle2">{props.company}</Typography>
         </Grid>
-        <Grid item xs><Typography gutterBottom variant="body1">{props.tags}</Typography></Grid>
+        <Grid item xs>
+          <Typography gutterBottom variant="body1">{props.tags}</Typography>
+          <Rating label="Rating" name="rating" precision={0.5} value={props.rating} readOnly></Rating>
+        </Grid>
       </Grid>
       <Grid item xs={1} sm={1} container direction="column" spacing={2} className={classes.price} onMouseEnter={() => {setShowControls(true)}} onMouseLeave={() => {setShowControls(false)}}>
         <Grid item xs={1} sm={1}>{props.price}€</Grid>
@@ -120,7 +124,7 @@ function Coffee(props) {
           >
             <div className={classes.paper}>
               <h2 id="update-modal-title">Update coffee</h2>
-              <CoffeeForm id={props.id} name={props.name} company={props.company} tags={props.tags} price={props.price} imageUrl={props.imageUrl} onSuccessfulSubmit={props.onSuccessfulUpdate} onFailedSubmit={props.onFailedUpdate} onReset={() => {setShowUpdateModal(false)}}></CoffeeForm>
+              <CoffeeForm id={props.id} name={props.name} company={props.company} rating={props.rating} tags={props.tags} price={props.price} imageUrl={props.imageUrl} onSuccessfulSubmit={props.onSuccessfulUpdate} onFailedSubmit={props.onFailedUpdate} onReset={() => {setShowUpdateModal(false)}}></CoffeeForm>
             </div>
           </Modal>
       </Grid>

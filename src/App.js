@@ -47,7 +47,7 @@ function App() {
   }
   
   const coffeeItems = coffees.map((coffee) => 
-    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulUpdate={() => {setSuccessfulUpdateOpen(true); setTimer(setTimeout(() => {setSuccessfulUpdateOpen(false)}, 3000)); loadCoffees()}} onFailedUpdate={() => {setFailedUpdateOpen(true); setTimer(setTimeout(() => {setFailedUpdateOpen(false)}, 3000));}} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimer(setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000)); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimer(setTimeout(() => {setFailedDeleteOpen(false)}, 3000));}}></Coffee></Grid>
+    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} rating={coffee.rating} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulUpdate={() => {setSuccessfulUpdateOpen(true); setTimer(setTimeout(() => {setSuccessfulUpdateOpen(false)}, 3000)); loadCoffees()}} onFailedUpdate={() => {setFailedUpdateOpen(true); setTimer(setTimeout(() => {setFailedUpdateOpen(false)}, 3000));}} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimer(setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000)); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimer(setTimeout(() => {setFailedDeleteOpen(false)}, 3000));}}></Coffee></Grid>
   )
 
   useEffect(() => {loadCoffees()}, []);

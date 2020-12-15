@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Rating from '@material-ui/lab/Rating';
 import './Coffee.css';
 import { Button, ButtonBase, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -80,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
+  fields: {
+    maxWidth: 392
+  }
 }));
 
 
@@ -88,6 +92,7 @@ function CoffeeForm(props) {
 
   const [name, setName] = useState(props.name != undefined ? props.name : "");
   const [company, setCompany] = useState(props.company != undefined ? props.company : "");
+  const [rating, setRating] = useState(props.rating != undefined ? props.rating : 4.5)
   const [tags, setTags] = useState(props.tags != undefined ? props.tags : "");
   const [price, setPrice] = useState(props.price != undefined ? props.price : "");
   const [image, setImage] = useState(props.image != undefined ? {url: props.image} : {url: "scenery.jpg"});
@@ -109,6 +114,10 @@ function CoffeeForm(props) {
     setPrice(event.target.value);
   }
 
+  const handleRating = (event) => {
+    setRating(event.target.value);
+  }
+
   const handleImage = (event) => {
     setImage({url: URL.createObjectURL(event.target.files[0]), file: event.target.files[0]});
     console.log(`image url: ${URL.createObjectURL(event.target.files[0])}`);
@@ -120,6 +129,7 @@ function CoffeeForm(props) {
       formData.append('image', image.file);
       formData.append('name', name);
       formData.append('company', company);
+      formData.append('rating', rating);
       formData.append('tags', tags);
       formData.append('price', price);
 
@@ -145,6 +155,7 @@ function CoffeeForm(props) {
       formData.append('image', image.file);
       formData.append('name', name);
       formData.append('company', company);
+      formData.append('rating', rating);
       formData.append('tags', tags);
       formData.append('price', price);
 
@@ -222,18 +233,17 @@ function CoffeeForm(props) {
               </label>
           </div>
         </Grid>
-        <Grid item xs sm container direction="column" spacing={2}>
+        <Grid item xs={12} sm container direction="column" spacing={2} className={classes.fields}>
           <Grid item xs sm container spacing={2}>
-            <Grid item xs sm container direction="column" spacing={2}>
-              <Grid item xs><TextField label="Name" name="name" value={name} onChange={handleName}></TextField></Grid>
-              <Grid item xs><TextField label="Company" name="company" value={company} onChange={handleCompany}></TextField></Grid>
+            <Grid item xs={6}><TextField label="Name" name="name" value={name} onChange={handleName}></TextField></Grid>
+            <Grid item xs={6}><TextField label="Price" type="number" InputProps={{inputProps : {min: 0, step: 0.1}}} name="price" value={price} onChange={handlePrice}></TextField></Grid>
+            <Grid item xs={6}><TextField label="Company" name="company" value={company} onChange={handleCompany}></TextField></Grid>
+            <Grid item xs={6} container alignItems="flex-end">
+              <Rating label="Rating" name="rating" precision={0.5} value={rating} onChange={handleRating}></Rating>
             </Grid>
-            <Grid item xs sm container direction="column" spacing={2}>
-              <Grid item xs><TextField label="Tags" multiline name="tags" value={tags} onChange={handleTags}></TextField></Grid>
-              <Grid item xs><TextField label="Price" type="number" InputProps={{inputProps : {min: 0, step: 0.1}}} name="price" value={price} onChange={handlePrice}></TextField></Grid>
-            </Grid>
+            <Grid item xs={12}><TextField fullWidth={true} label="Tags" multiline name="tags" value={tags} onChange={handleTags}></TextField></Grid>
           </Grid>
-              <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={handleSubmit}>{props.id == undefined && 'Add Coffee'}{props.id != undefined && 'Update Coffee'}</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
+          <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={handleSubmit}>{props.id == undefined && 'Add Coffee'}{props.id != undefined && 'Update Coffee'}</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
         </Grid>
       </Grid>
     </form>
