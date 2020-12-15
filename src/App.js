@@ -32,6 +32,8 @@ function App() {
 
   const classes = useStyles();
   const [coffees, setCoffees] = useState([])
+  const [successfulUpdateOpen, setSuccessfulUpdateOpen] = useState(false)
+  const [failedUpdateOpen, setFailedUpdateOpen] = useState(false)
   const [successfulDeleteOpen, setSuccessfulDeleteOpen] = useState(false)
   const [failedDeleteOpen, setFailedDeleteOpen] = useState(false)
   const [successfulCreateOpen, setSuccessfulCreateOpen] = useState(false)
@@ -45,7 +47,7 @@ function App() {
   }
   
   const coffeeItems = coffees.map((coffee) => 
-    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimer(setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000)); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimer(setTimeout(() => {setFailedDeleteOpen(false)}, 3000));}}></Coffee></Grid>
+    <Grid item><Coffee id={coffee.id} name={coffee.name} company={coffee.company} tags={coffee.tags} price={coffee.price} imageUrl={coffee.imageUrl != undefined ? coffee.imageUrl : "scenery.jpg"} onSuccessfulUpdate={() => {setSuccessfulUpdateOpen(true); setTimer(setTimeout(() => {setSuccessfulUpdateOpen(false)}, 3000)); loadCoffees()}} onFailedUpdate={() => {setFailedUpdateOpen(true); setTimer(setTimeout(() => {setFailedUpdateOpen(false)}, 3000));}} onSuccessfulDelete={() => {setSuccessfulDeleteOpen(true); setTimer(setTimeout(() => {setSuccessfulDeleteOpen(false)}, 3000)); loadCoffees();}} onFailedDelete={() => {setFailedDeleteOpen(true); setTimer(setTimeout(() => {setFailedDeleteOpen(false)}, 3000));}}></Coffee></Grid>
   )
 
   useEffect(() => {loadCoffees()}, []);
@@ -120,6 +122,40 @@ function App() {
         </DialogTitle>
         <DialogActions>
           <Button onClick={() => {setFailedCreateOpen(false); clearTimeout(timer)}}>ok</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        className={classes.modal}
+        open={successfulUpdateOpen}
+        onClose={() => setSuccessfulUpdateOpen(false)}
+        aria-labelledby="successful-update-modal-title"        
+      >
+        <DialogTitle id="successful-update-modal-title" className={classes.modalTitle}>
+          <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            Coffee successfully updated!
+          </Alert>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => {setSuccessfulUpdateOpen(false); clearTimeout(timer)}}>ok</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        className={classes.modal}
+        open={failedUpdateOpen}
+        onClose={() => setFailedUpdateOpen(false)}
+        aria-labelledby="failed-update-modal-title"        
+      >
+        <DialogTitle id="failed-update-modal-title" className={classes.modalTitle}>
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Could not update coffee
+          </Alert>
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={() => {setFailedUpdateOpen(false); clearTimeout(timer)}}>ok</Button>
         </DialogActions>
       </Dialog>
 

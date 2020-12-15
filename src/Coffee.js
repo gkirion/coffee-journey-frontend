@@ -85,7 +85,7 @@ function Coffee(props) {
           {showControls && (
             <Grid item xs={1} sm={1} container direction="column" className={classes.controls} justify="flex-end">
               <Grid item xs={1} sm={1}>
-                <IconButton>
+                <IconButton onClick={() => {setShowUpdateModal(true)}}>
                   <Edit></Edit>
                 </IconButton>
               </Grid>
@@ -120,7 +120,7 @@ function Coffee(props) {
           >
             <div className={classes.paper}>
               <h2 id="update-modal-title">Update coffee</h2>
-              <CoffeeForm onReset={() => {setShowUpdateModal(false)}}></CoffeeForm>
+              <CoffeeForm id={props.id} name={props.name} company={props.company} tags={props.tags} price={props.price} imageUrl={props.imageUrl} onSuccessfulSubmit={props.onSuccessfulUpdate} onFailedSubmit={props.onFailedUpdate} onReset={() => {setShowUpdateModal(false)}}></CoffeeForm>
             </div>
           </Modal>
       </Grid>

@@ -139,8 +139,37 @@ function CoffeeForm(props) {
     }
   }
 
+  const updateCoffee = async (coffeeId) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', image.file);
+      formData.append('name', name);
+      formData.append('company', company);
+      formData.append('tags', tags);
+      formData.append('price', price);
+
+      await fetch('http://localhost:5000/coffeeJourney/' + coffeeId, {
+        method: 'PUT',
+        body: formData
+      }).then((response) => {
+        if (response.status == 200) {
+          props.onSuccessfulSubmit();
+        } else {
+          props.onFailedSubmit();
+        }
+      });
+    } catch (e) {
+      console.log(e);
+      props.onFailedSubmit();
+    }
+  }
+
   const handleSubmit = () => {
-    submitCoffee()
+    if (props.id != undefined) {
+      updateCoffee(props.id)
+    } else {
+      submitCoffee()
+    }
     resetForm()
   }
 
@@ -204,7 +233,7 @@ function CoffeeForm(props) {
               <Grid item xs><TextField label="Price" type="number" InputProps={{inputProps : {min: 0, step: 0.1}}} name="price" value={price} onChange={handlePrice}></TextField></Grid>
             </Grid>
           </Grid>
-          <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={handleSubmit}>Add Coffee</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
+              <Grid item container spacing={2}><Grid item xs><Button variant="contained" color="primary" onClick={handleSubmit}>{props.id == undefined && 'Add Coffee'}{props.id != undefined && 'Update Coffee'}</Button></Grid><Grid item xs><Button variant="contained" onClick={resetForm}>Cancel</Button></Grid></Grid>
         </Grid>
       </Grid>
     </form>
